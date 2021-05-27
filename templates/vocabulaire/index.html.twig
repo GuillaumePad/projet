@@ -8,28 +8,21 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                
                 <th>Mot</th>
-                <th>Kana</th>
-                <th>Romaji</th>
                 <th>Sens</th>
                 <th>Contexte</th>
                 <th>Jlpt</th>
-                <th>Accent</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for vocabulaire in vocabulaires %}
             <tr>
-                <td>{{ vocabulaire.id }}</td>
                 <td>{{ vocabulaire.mot }}</td>
-                <td>{{ vocabulaire.kana }}</td>
-                <td>{{ vocabulaire.romaji }}</td>
                 <td>{{ vocabulaire.sens }}</td>
-                <td>{{ vocabulaire.contexte }}</td>
+                <td>{{ vocabulaire.contexte|raw }}</td>
                 <td>{{ vocabulaire.jlpt }}</td>
-                <td>{{ vocabulaire.accent }}</td>
                 <td>
                     <a href="{{ path('vocabulaire_show', {'id': vocabulaire.id}) }}">show</a>
                     <a href="{{ path('vocabulaire_edit', {'id': vocabulaire.id}) }}">edit</a>

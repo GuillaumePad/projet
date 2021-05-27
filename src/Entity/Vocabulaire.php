@@ -70,7 +70,7 @@ class Vocabulaire
     private $synonyme;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Vocabulaire", inversedBy="synonyme")
+     * @ORM\ManyToMany(targetEntity="Vocabulaire", inversedBy="synonyme", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="vocabulaire_synonyme",
      *      joinColumns={@ORM\JoinColumn(name="vocabulaire_id", referencedColumnName="id", nullable=true)},
      *      inverseJoinColumns={@ORM\JoinColumn(name="synonyme_id", referencedColumnName="id", nullable=true)}
@@ -84,7 +84,7 @@ class Vocabulaire
     private $antonyme;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Vocabulaire", inversedBy="antonyme")
+     * @ORM\ManyToMany(targetEntity="Vocabulaire", inversedBy="antonyme", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="vocabulaire_antonyme",
      *      joinColumns={@ORM\JoinColumn(name="vocabulaire_id", referencedColumnName="id", nullable=true)},
      *      inverseJoinColumns={@ORM\JoinColumn(name="antonyme_id", referencedColumnName="id", nullable=true)}
@@ -97,6 +97,16 @@ class Vocabulaire
      */
     private $classe;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Liste::class, mappedBy="idMot")
+     */
+    private $estDansListe;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
+
     public function __construct()
     {
         $this->kanji = new ArrayCollection();
@@ -105,6 +115,7 @@ class Vocabulaire
         $this->synonymeAvec = new ArrayCollection();
         $this->antonyme = new ArrayCollection();
         $this->antonymeDe = new ArrayCollection();
+        $this->estDansListe = new ArrayCollection();
     }
 
     public function __toString(){
@@ -358,6 +369,45 @@ class Vocabulaire
     public function setClasse(?string $classe): self
     {
         $this->classe = $classe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Liste[]
+     */
+    public function getEstDansListe(): Collection
+    {
+        return $this->estDansListe;
+    }
+
+    public function addEstDansListe(Liste $estDansListe): self
+    {
+        if (!$this->estDansListe->contains($estDansListe)) {
+            $this->estDansListe[] = $estDansListe;
+            $estDansListe->addIdMot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEstDansListe(Liste $estDansListe): self
+    {
+        if ($this->estDansListe->removeElement($estDansListe)) {
+            $estDansListe->removeIdMot($this);
+        }
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

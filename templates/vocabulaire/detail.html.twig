@@ -1,0 +1,60 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}{{ vocabulaire.mot }}{% endblock %}
+
+{% block body %}
+    <h1>{{ vocabulaire.mot }}</h1>
+    <h2>{{ vocabulaire.kana }}</h2>
+    <h2>{{ vocabulaire.romaji }}</h2>
+        <div class="col-12">
+            {% if vocabulaire.contexte is defined and vocabulaire.contexte is not null %}
+                {{ vocabulaire.contexte|raw }}
+            {% endif %}
+        </div>
+    {% if vocabulaire.contexte is defined and vocabulaire.contexte is not null %}
+    <p>Utilise les kanjis</p>
+    
+    <div class="col-12 col-md-3">
+    {% for kanji in vocabulaire.kanji %}
+    <span><a href="{{path('kanji_detail', {'id': kanji.id})}}">
+    {{kanji.caractere}}
+    </a></span>
+    {% endfor %}
+    </div>
+    
+    {% endif %}
+    
+    
+    {% if vocabulaire.compteur is defined and vocabulaire.compteur is not null %}
+
+    <p>Utilise les compteurs</p>
+    <div class="col-12 col-md-3">
+    {% for compteur in vocabulaire.compteur %}
+    <span><a href="{{path('compteur_detail', {'id': compteur.id})}}">
+    {{compteur.symbole}}
+    </a></span>
+    <span> : {{compteur.sens}}</span>
+    {% endfor %}
+    </div>
+    {% endif %}
+    
+    <div class="row">
+    <div class="col">
+    <p>Synonymes</p>
+    {% for synonyme in vocabulaire.synonyme %}
+    <a href="{{path('vocabulaire_detail', {'id': synonyme.id})}}">{{synonyme.mot}}</a>
+    <p>{{synonyme.contexte|raw}}</p>
+    {% endfor %}
+    </div>
+    <div class="col">
+    <p>Antonymes</p>
+    {% for antonyme in vocabulaire.antonyme %}
+    <a href="{{path('vocabulaire_detail', {'id': antonyme.id})}}">{{antonyme.mot}}</a>
+    <p>{{antonyme.contexte|raw}}</p>
+    {% endfor %}
+    </div>
+    </div>
+    
+    
+    
+{% endblock %}

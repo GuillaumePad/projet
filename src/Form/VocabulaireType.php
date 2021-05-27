@@ -30,6 +30,7 @@ class VocabulaireType extends AbstractType
             ->add('synonymeAvec', EntityType::class, ["multiple"=> true, 'class' => Vocabulaire::class, "required"=>false ])
             ->add('antonyme', EntityType::class, ["multiple"=> true, 'class' => Vocabulaire::class, "required"=>false ])
             ->add('antonymeDe', EntityType::class, ["multiple"=> true, 'class' => Vocabulaire::class, "required"=>false ])
+            ->add('active')
         ;
     }
 

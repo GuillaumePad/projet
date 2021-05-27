@@ -5,16 +5,25 @@ namespace App\Controller;
 use App\Entity\Vocabulaire;
 use App\Form\VocabulaireType;
 use App\Repository\VocabulaireRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 class VocabulaireController extends AbstractController
 {
     /**
-     * @Route("/vocabulaire", name="vocabulaire_index", methods={"GET"})
+     * @Route("/vocabulaire/detail/{id}", name="vocabulaire_detail")
+     */
+    public function detailFront($id, VocabulaireRepository $vocabulaireRepository):Response{
+        return $this->render("vocabulaire/detail.html.twig", [
+            "vocabulaire"=>$vocabulaireRepository->find($id)]);
+    }
+
+    /**
+     * @Route("/admin/vocabulaire", name="vocabulaire_index", methods={"GET"})
      */
     public function index(VocabulaireRepository $vocabulaireRepository): Response
     {
@@ -23,6 +32,21 @@ class VocabulaireController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/vocabulaire", name="dico")
+     */
+    public function dicp(VocabulaireRepository $vocabulaireRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        $vocabulaires=$vocabulaireRepository->findBy(['active'=>1], ["kana"=>"ASC"]);
+        $pagination = $paginator->paginate(
+            $vocabulaires, // Les données à paginer
+            $request->query->getInt('page', 1), // le numéro de la page
+            5 // le nombre par page
+        );
+        return $this->render('vocabulaire/index-front.html.twig', [
+            'vocabulaires' => $pagination,
+        ]);
+    }
     /**
      * @Route("/vocabulaire/new", name="vocabulaire_new", methods={"GET","POST"})
      */

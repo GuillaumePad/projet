@@ -1,0 +1,15 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}{{ kanji.caractere }}{% endblock %}
+
+{% block body %}
+    <h1>{{ kanji.caractere }}</h1>
+    <h2>Sens</h2>
+    {{ kanji.sens }}
+    <h2>Prononciation Onyomi</h2>
+    {{ kanji.onyomi }}
+    <h2>Prononciation Kunyomi</h2>
+    {{ kanji.kunyomi }}
+        
+    
+{% endblock %}

@@ -11,14 +11,13 @@
 
 		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 		<link rel="stylesheet" href="{{ asset('css/style.min.css')}}"> {% block stylesheets %}{% endblock %}
 		</head>
 		<body>
 			{# NAVBAR #}
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="#">Admin</a>
+					<a class="navbar-brand" href="#">Dictionnaire</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
@@ -27,6 +26,11 @@
 							<li class="nav-item">
 								<a class="nav-link active" aria-current="page" href="#">Dashboard</a>
 							</li>
+							{% if app.user.roles is defined and "ROLE_USER" in app.user.roles %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('dico')}}">Mon Dictionnaire</a>
+							</li>
+							{% endif %}
 							<li class="nav-item">
 								<a class="nav-link" href="{{ path('vocabulaire_index')}}">Dictionnaire</a>
 							</li>
@@ -39,11 +43,29 @@
 							<li class="nav-item">
 								<a class="nav-link" href="{{ path('grammaire_index')}}">Grammaire</a>
 							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Contact</a>
+							</li>
 							<li class="nav-item w-100">
 								<div class="d-lg-flex w-100 justify-content-lg-end">
-									<a class="nav-link" href="#" title="Se déconnecter">
-										<i class="fas fa-sign-out-alt"></i>
-									</a>
+									{% if app.user.roles is defined and "ROLE_USER" in app.user.roles %}
+										{% if "ROLE_ADMIN" in app.user.roles %}
+											<a href="{{ path('dashboard')}}" class="nav-link">Admin</a>
+										{% endif %}
+										<a href="{{ path('mon-compte') }}" class="nav-link">
+										<i class="fas fa-user"></i>
+										</a>
+										<a class="nav-link" href="{{ path('app_logout')}}">
+											<i class="fas fa-sign-out-alt"></i>
+										</a>
+									{% else %}
+										<a href="{{ path('user-inscription')}}" class="nav-link">
+										<i class="fas fa-user-edit"></i>
+										</a>
+										<a class="nav-link" href="{{ path('app_login')}}">
+											<i class="fas fa-sign-in-alt"></i>
+										</a>
+									{% endif %}
 								</div>
 							</li>
 						</ul>
@@ -53,6 +75,7 @@
 			{# FIN NAVBAR #}
 			<div class="container bg-white py-3 shadow contenu"> {% block body %}{% endblock %}
 				</div>
+				<footer class="bg-dark text-white p-3">&copy; 2021 Dictiosaurus</footer>
 				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
 				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 				<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

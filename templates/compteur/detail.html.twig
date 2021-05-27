@@ -1,0 +1,14 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}{{ compteur.symbole }}{% endblock %}
+
+{% block body %}
+    <h1>{{ compteur.symbole }}</h1>
+    <h2>Sens</h2>
+    {{ compteur.sens }}
+    <h3>Tableau des valeurs avec accent</h3>
+    {{ compteur.tableau|raw }}
+    
+        
+    
+{% endblock %}

@@ -12,6 +12,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CompteurController extends AbstractController
 {
+
+    /**
+     * @Route("/compteur/detail/{id}", name="compteur_detail")
+     */
+    public function detailFront($id, CompteurRepository $compteurRepository):Response{
+        return $this->render("compteur/detail.html.twig", [
+            "compteur"=>$compteurRepository->find($id)]);
+    }
     /**
      * @Route("/compteur", name="compteur_index", methods={"GET"})
      */

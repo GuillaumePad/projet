@@ -75,11 +75,17 @@ class Kanji
      */
     private $apparaitDans;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Liste::class, mappedBy="idKanji")
+     */
+    private $estDansListe;
+
     public function __construct()
     {
         $this->composant = new ArrayCollection();
         $this->aPourComposant = new ArrayCollection();
         $this->apparaitDans = new ArrayCollection();
+        $this->estDansListe = new ArrayCollection();
     }
 
     public function __toString(){
@@ -248,6 +254,33 @@ class Kanji
     {
         if ($this->apparaitDans->removeElement($apparaitDan)) {
             $apparaitDan->removeKanji($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Liste[]
+     */
+    public function getEstDansListe(): Collection
+    {
+        return $this->estDansListe;
+    }
+
+    public function addEstDansListe(Liste $estDansListe): self
+    {
+        if (!$this->estDansListe->contains($estDansListe)) {
+            $this->estDansListe[] = $estDansListe;
+            $estDansListe->addIdKanji($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEstDansListe(Liste $estDansListe): self
+    {
+        if ($this->estDansListe->removeElement($estDansListe)) {
+            $estDansListe->removeIdKanji($this);
         }
 
         return $this;

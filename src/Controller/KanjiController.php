@@ -12,6 +12,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class KanjiController extends AbstractController
 {
+
+    /**
+     * @Route("/kanji/detail/{id}", name="kanji_detail")
+     */
+    public function kanjiDetail($id, KanjiRepository $kanjiRepository){
+        return $this->render("kanji/detail.html.twig", ["kanji"=>$kanjiRepository->find($id)]);
+    }
     /**
      * @Route("/kanji", name="kanji_index", methods={"GET"})
      */
