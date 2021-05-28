@@ -3,13 +3,20 @@
 {% block title %}{{ kanji.caractere }}{% endblock %}
 
 {% block body %}
-    <h1>{{ kanji.caractere }}</h1>
-    <h2>Sens</h2>
-    {{ kanji.sens }}
-    <h2>Prononciation Onyomi</h2>
-    {{ kanji.onyomi }}
-    <h2>Prononciation Kunyomi</h2>
-    {{ kanji.kunyomi }}
-        
+    <div class"container">
+        <div class="row w-50 border border-dark border-5 mx-auto bg-light">
+            <div class="col">
+                <p class="fs-1 h-100">{{ kanji.caractere }}</p>
+            </div>
+            <div class="col border-start border-dark">
+                <div class="m-4"><p class="mb-0 fw-bold">Sens :</p>
+                {{ kanji.sens }}</div>
+                <div class="m-4"><p class="mb-0 fw-bold">Prononciation Onyomi :</p>
+                {{ kanji.onyomi }}</div>
+                <div class="m-4"><p class="mb-0 fw-bold">Prononciation Kunyomi :</p>
+                {{ kanji.kunyomi }}</div>
+            </div>
+        </div>
+    </div>
     
 {% endblock %}

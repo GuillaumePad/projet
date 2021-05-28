@@ -26,9 +26,9 @@ class VocabulaireType extends AbstractType
             ->add('accent')
             ->add('kanji', EntityType::class, ["multiple"=> true, 'class' => Kanji::class, "required"=>false ])
             ->add('Compteur', EntityType::class, ["multiple"=> true, 'class' => Compteur::class, "required"=>false ])
-            ->add('synonyme', EntityType::class, ["multiple"=> true, 'class' => Vocabulaire::class, "required"=>false ])
+            ->remove('synonyme', EntityType::class, ["multiple"=> true, 'class' => Vocabulaire::class, "required"=>false ])
             ->add('synonymeAvec', EntityType::class, ["multiple"=> true, 'class' => Vocabulaire::class, "required"=>false ])
-            ->add('antonyme', EntityType::class, ["multiple"=> true, 'class' => Vocabulaire::class, "required"=>false ])
+            ->remove('antonyme', EntityType::class, ["multiple"=> true, 'class' => Vocabulaire::class, "required"=>false ])
             ->add('antonymeDe', EntityType::class, ["multiple"=> true, 'class' => Vocabulaire::class, "required"=>false ])
             ->add('active')
         ;
